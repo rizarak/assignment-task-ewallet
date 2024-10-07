@@ -1,0 +1,50 @@
+syntax = "proto3";
+option go_package = "assignment-task-ewallet/wallet/proto/transaction_service/v1;transaction";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package proto.transaction_service.v1;
+
+service TransactionSvc {
+  rpc GetTransactions (GetTransactionRequest) returns (GetTransactionResponse) {}
+  rpc CreateTransaction (CreateTransactionRequest) returns (MutationTransResponse) {}
+}
+  
+message Transaction {
+  int32 id = 1;
+  int32 user_id = 2;
+  float balance = 3;
+  string type = 4;
+  string category = 5;
+  float amount = 6;
+  string notes = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message GetTransactionRequest {
+  string type = 1;
+  string category = 2;
+  int32 user_id  = 3;
+  int32 page_size = 4;
+  int32 page = 5;
+}
+
+message GetTransactionResponse {
+  repeated Transaction transactions = 1;
+  int32 count = 2;
+}
+
+message CreateTransactionRequest {
+  int32 source_id = 1;
+  int32 destination_id = 2;
+  string type = 3;
+  string category = 4;
+  float amount = 5;
+  string notes = 6;
+}
+  
+message MutationTransResponse {
+  string message = 1;
+}

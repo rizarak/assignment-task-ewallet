@@ -1,0 +1,50 @@
+syntax = "proto3";
+option go_package = "assignment-task-ewallet/wallet/proto/wallet_service/v1;wallet";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package proto.wallet_service.v1;
+
+service WalletSvc {
+    rpc GetWallets (google.protobuf.Empty) returns (GetWalletsResponse) {}
+    rpc GetWalletByUserId (GetWalletByUserIdRequest) returns (GetWalletByUserIdResponse) {}
+    rpc CreateWallet (CreateWalletRequest) returns (MutationResponse) {}
+    rpc UpdateWallet (UpdateWalletRequest) returns (MutationResponse) {}
+  }
+  
+  message Wallet {
+    int32 id = 1;
+    int32 userId = 2;
+    string name = 3;
+    float balance = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+  }
+  
+  message GetWalletsResponse {
+    repeated Wallet wallets = 1;
+  }
+  
+  message GetWalletByUserIdRequest {
+    int32 userId = 1;
+  }
+  
+  message GetWalletByUserIdResponse {
+    Wallet wallet = 1;
+  }
+
+  message CreateWalletRequest {
+    int32 id = 1;
+    int32 userId = 2;
+    float balance = 3;
+  }
+
+  message UpdateWalletRequest {
+    int32 id = 1;
+    float balance = 2;
+  }
+  
+  message MutationResponse {
+    string message = 1;
+  }
